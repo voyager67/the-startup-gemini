@@ -1,0 +1,6 @@
+description = "Summon the Principal Engineer (@eng) to implement backlog tasks with full test coverage"
+prompt = """
+Read `.gemini/agents/03-principal-eng.md`, `.startup/02_ARCHITECTURE.md`, and `.startup/03_BACKLOG.md`.
+Task to build: {{args}}
+Implement complete production code and automated tests. Verify via test runner before marking `[x]` in `.startup/03_BACKLOG.md`.
+"""

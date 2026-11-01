@@ -1,0 +1,6 @@
+description = "Run a multi-agent code review checking spec compliance, security, and performance"
+prompt = """
+Read `.gemini/workflows/review.md`, `.startup/CONSTITUTION.md`, `.gemini/agents/05-red-team-qa.md`, and `.gemini/agents/07-finops-scale.md`.
+Review scope: {{args}}
+Audit all recent changes against the active PRD/Architecture/Constitution. Output a structured review categorized by `[BLOCKER]`, `[MAJOR]`, `[MINOR]`, and `[NIT]` with exact file:line fixes.
+"""

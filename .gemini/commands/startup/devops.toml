@@ -1,0 +1,6 @@
+description = "Summon the Staff SRE & DevOps Lead (@devops) for Docker, CI/CD, and production readiness"
+prompt = """
+Read `.gemini/agents/06-sre-devops.md` and `.startup/02_ARCHITECTURE.md`.
+Infrastructure target: {{args}}
+Deliver hardened multi-stage Dockerfiles, GitHub Actions workflows, `/healthz` endpoints, and graceful shutdown handlers.
+"""

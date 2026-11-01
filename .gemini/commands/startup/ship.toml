@@ -1,0 +1,6 @@
+description = "Execute the full autonomous Spec-to-Ship pipeline (Specify -> Arch -> Implement -> RedTeam)"
+prompt = """
+Read `.gemini/workflows/spec-to-ship.md`.
+Idea or feature to ship: {{args}}
+Execute Phase 1 (@pm PRD & Backlog), Phase 2 (@arch System Architecture), Phase 3 (@eng Production Code + Tests), and Phase 4 (@redteam + @finops Audit) end-to-end.
+"""

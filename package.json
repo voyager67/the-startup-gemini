@@ -1,0 +1,25 @@
+{
+  "name": "the-startup-gemini",
+  "version": "1.0.0",
+  "description": "Turn Gemini CLI into an autonomous 12-agent spec-driven Silicon Valley startup engineering team with 20 native /startup:* slash commands, Boardroom debates, and a 2M-token state bus.",
+  "bin": {
+    "the-startup-gemini": "./bin/startup",
+    "gemini-startup": "./bin/startup"
+  },
+  "scripts": {
+    "init": "./bin/startup init",
+    "test": "bash -n ./bin/startup && bash -n ./install.sh && echo '✔ All shell scripts and configurations valid!'"
+  },
+  "keywords": [
+    "gemini",
+    "gemini-cli",
+    "the-startup",
+    "ai-agents",
+    "multi-agent-systems",
+    "spec-driven-development",
+    "autonomous-coding",
+    "slash-commands",
+    "developer-tools"
+  ],
+  "license": "MIT"
+}

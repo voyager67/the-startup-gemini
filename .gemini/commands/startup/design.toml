@@ -1,0 +1,6 @@
+description = "Summon the Principal Design Engineer (@design) for UI systems, UX flows, or screenshot audits"
+prompt = """
+Read `.gemini/agents/04-design-lead.md` and `.startup/01_PRD.md`.
+Design or visual audit request: {{args}}
+Deliver tokenized CSS/Tailwind systems, keyboard-accessible components, complete loading/empty/error states, or pixel-level screenshot fixes.
+"""

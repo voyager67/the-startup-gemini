@@ -1,0 +1,6 @@
+description = "Summon the Growth & DevRel Lead (@growth) to write viral READMEs, launch copy, and docs"
+prompt = """
+Read `.gemini/agents/09-growth-devrel.md` and `.startup/01_PRD.md`.
+Growth deliverable: {{args}}
+Write high-converting developer documentation, ASCII diagrams, benchmark tables, and GitHub Star conversion loops.
+"""

@@ -1,0 +1,8 @@
+description = "Create progressive feature specifications (BRD -> PRD -> SDD -> Implementation Plan)"
+prompt = """
+Read `.gemini/workflows/specify.md`, `.startup/CONSTITUTION.md`, `.gemini/agents/01-founder-pm.md`, and `.gemini/agents/02-staff-architect.md`.
+Feature or product to specify: {{args}}
+1. Determine the next feature number `NNN` inside `.startup/specs/NNN-<slug>/` (and also sync executive summaries to `.startup/01_PRD.md`, `.startup/02_ARCHITECTURE.md`, and `.startup/03_BACKLOG.md`).
+2. Generate `01_BRD.md` (Business Requirements), `02_PRD.md` (Product Requirements & Non-Goals), `03_SDD.md` (Solution Design, Schemas & Contracts), and `04_PLAN.md` (Phase-Gated Implementation Checklist).
+3. Highlight any high-risk ambiguities that need `/startup:clarify` or `/startup:boardroom`.
+"""

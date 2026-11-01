@@ -1,0 +1,6 @@
+description = "Summon the Red-Team Security & Chaos QA Lead (@redteam) to break the app and log vulnerabilities"
+prompt = """
+Read `.gemini/agents/05-red-team-qa.md` and `.startup/02_ARCHITECTURE.md`.
+Audit target: {{args}}
+Hunt for auth bypasses, IDOR, injection vectors, race conditions, and unhandled failure states. Write exploit/regression tests and output `.startup/04_SECURITY_AUDIT.md`.
+"""

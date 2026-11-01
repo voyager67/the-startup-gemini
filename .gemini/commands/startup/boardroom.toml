@@ -1,0 +1,6 @@
+description = "Trigger a 3-way adversarial debate (@pm vs @arch vs @finops) and record a binding ADR"
+prompt = """
+Read `.gemini/workflows/boardroom.md`, `.startup/01_PRD.md`, and `.startup/02_ARCHITECTURE.md`.
+Dilemma to debate: {{args}}
+Run the structured clash between Founder PM, Staff Architect, and FinOps Lead. Deliver the Managing Partner Verdict and append an ADR to `.startup/05_DECISION_LOG.md`.
+"""

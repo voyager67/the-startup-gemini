@@ -1,0 +1,11 @@
+{
+  "contextFileName": "GEMINI.md",
+  "model": "gemini-2.5-pro",
+  "sandbox": false,
+  "autoApprove": [
+    "read_file",
+    "list_directory",
+    "search_file_content",
+    "glob"
+  ]
+}

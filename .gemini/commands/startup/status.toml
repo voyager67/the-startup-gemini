@@ -1,0 +1,5 @@
+description = "Display an executive dashboard of specs, backlog progress, and security audit status"
+prompt = """
+Inspect `.startup/CONSTITUTION.md`, `.startup/01_PRD.md`, `.startup/02_ARCHITECTURE.md`, `.startup/03_BACKLOG.md`, `.startup/04_SECURITY_AUDIT.md`, `.startup/05_DECISION_LOG.md`, and `.startup/specs/`.
+Render a crisp status table showing completed `[x]` vs pending `[ ]` tasks, open security findings, recent ADRs, and the exact recommended next `/startup:*` command.
+"""

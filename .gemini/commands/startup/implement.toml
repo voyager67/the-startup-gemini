@@ -1,0 +1,9 @@
+description = "Execute the specification plan phase-by-phase with tests and zero placeholders"
+prompt = """
+Read `.gemini/workflows/implement.md`, `.startup/CONSTITUTION.md`, `.gemini/agents/03-principal-eng.md`, `.startup/02_ARCHITECTURE.md`, and `.startup/03_BACKLOG.md` (plus any target `.startup/specs/NNN-*/04_PLAN.md`).
+Implementation target: {{args}}
+Execute the tasks systematically:
+1. Write complete, production-ready code with zero `TODO`s or mocks.
+2. Write unit and integration tests for every module.
+3. Run tests, typechecks, and linters to verify before marking tasks `[x]`.
+"""

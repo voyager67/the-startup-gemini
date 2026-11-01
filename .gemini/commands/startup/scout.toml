@@ -1,0 +1,6 @@
+description = "Summon the 2M-Token Market Scout (@scout) for deep codebase, SDK, or competitor synthesis"
+prompt = """
+Read `.gemini/agents/08-market-scout.md`.
+Research target: {{args}}
+Use Gemini's 2M-token context window to synthesize large repositories or documentation sets and produce a concrete Buy-vs-Build matrix.
+"""

@@ -1,0 +1,8 @@
+description = "Safely restructure code using characterization tests and atomic steps"
+prompt = """
+Read `.gemini/agents/11-refactor-surgeon.md` and `.startup/CONSTITUTION.md`.
+Refactoring target: {{args}}
+1. Verify or write behavior-preserving characterization tests first.
+2. Execute incremental, verifiable structural improvements (extracting modules, removing duplication, tightening types).
+3. Re-run the full test suite to prove zero regressions.
+"""

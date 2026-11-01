@@ -1,0 +1,6 @@
+description = "Summon the Staff Systems Architect (@arch) to design schemas, contracts, and system boundaries"
+prompt = """
+Read `.gemini/agents/02-staff-architect.md` and `.startup/01_PRD.md`.
+Architectural focus: {{args}}
+Design a low-complexity, high-reliability architecture in `.startup/02_ARCHITECTURE.md` and record key trade-offs in `.startup/05_DECISION_LOG.md`.
+"""

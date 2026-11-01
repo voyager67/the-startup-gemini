@@ -1,0 +1,6 @@
+description = "Summon the FinOps & Performance Lead (@finops) to optimize SQL queries, latency, and token/cloud costs"
+prompt = """
+Read `.gemini/agents/07-finops-scale.md` and `.startup/02_ARCHITECTURE.md`.
+Optimization target: {{args}}
+Eliminate N+1 queries, add missing composite indexes, reduce bundle/payload sizes, and optimize LLM prompt/model routing costs.
+"""

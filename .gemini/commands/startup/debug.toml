@@ -1,0 +1,8 @@
+description = "Perform forensic root-cause analysis, write a failing reproduction test, and fix the bug"
+prompt = """
+Read `.gemini/agents/12-bug-detective.md`.
+Bug report / stack trace / symptom: {{args}}
+1. Formulate falsifiable hypotheses and isolate the exact root cause.
+2. Write an automated test that deterministically reproduces the bug.
+3. Apply the minimal, clean fix and verify all tests pass.
+"""

@@ -1,0 +1,6 @@
+description = "Summon the YC Partner & Founder PM (@pm) to cut scope by 50% and write the PRD & Backlog"
+prompt = """
+Read `.gemini/agents/01-founder-pm.md`.
+Product idea or feature: {{args}}
+Ruthlessly strip v1 down to the core value loop. Write `.startup/01_PRD.md` and populate `.startup/03_BACKLOG.md` with atomic tasks.
+"""

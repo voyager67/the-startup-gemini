@@ -1,0 +1,163 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+STATE_DIR=".startup"
+BOLD="\033[1m"
+CYAN="\033[36m"
+GREEN="\033[32m"
+YELLOW="\033[33m"
+MAGENTA="\033[35m"
+RESET="\033[0m"
+
+detect_repo_slug() {
+  if git remote get-url origin &>/dev/null; then
+    git remote get-url origin | sed -E 's#.*github\.com[:/]([^/]+/[^/.]+)(\.git)?$#\1#'
+  else
+    echo "voyager67/the-startup-gemini"
+  fi
+}
+
+REPO_SLUG="$(detect_repo_slug)"
+REPO_URL="https://github.com/${REPO_SLUG}"
+
+banner() {
+  echo -e "${CYAN}${BOLD}"
+  echo "╔══════════════════════════════════════════════════════════════════╗"
+  echo "║         ⚡ THE STARTUP — GEMINI CLI AGENT ORCHESTRATOR           ║"
+  echo "╚══════════════════════════════════════════════════════════════════╝"
+  echo -e "${RESET}"
+}
+
+star_cta() {
+  echo -e "\n${MAGENTA}────────────────────────────────────────────────────────────────────${RESET}"
+  echo -e "⭐ ${BOLD}If The Startup saved you time, support us with a GitHub Star!${RESET}"
+  echo -e "👉 Run ${CYAN}./bin/startup star${RESET} or visit: ${YELLOW}${REPO_URL}${RESET}"
+  echo -e "${MAGENTA}────────────────────────────────────────────────────────────────────${RESET}"
+}
+
+init_state() {
+  mkdir -p "$STATE_DIR/specs/000-template"
+  [[ -f "$STATE_DIR/CONSTITUTION.md" ]] || echo "# Project Constitution" > "$STATE_DIR/CONSTITUTION.md"
+  [[ -f "$STATE_DIR/01_PRD.md" ]] || echo "# 01 — Product Requirements Document" > "$STATE_DIR/01_PRD.md"
+  [[ -f "$STATE_DIR/02_ARCHITECTURE.md" ]] || echo "# 02 — System Architecture" > "$STATE_DIR/02_ARCHITECTURE.md"
+  [[ -f "$STATE_DIR/03_BACKLOG.md" ]] || echo "# 03 — Engineering Backlog" > "$STATE_DIR/03_BACKLOG.md"
+  [[ -f "$STATE_DIR/04_SECURITY_AUDIT.md" ]] || echo "# 04 — Red-Team Security Audit" > "$STATE_DIR/04_SECURITY_AUDIT.md"
+  [[ -f "$STATE_DIR/05_DECISION_LOG.md" ]] || echo "# 05 — Architecture Decision Records" > "$STATE_DIR/05_DECISION_LOG.md"
+  echo -e "${GREEN}✔ Initialized .startup/ persistent memory bus.${RESET}"
+}
+
+run_gemini() {
+  local model="$1"
+  local prompt="$2"
+  if ! command -v gemini &>/dev/null; then
+    echo -e "${YELLOW}⚠️  'gemini' CLI not found. Install it first: npm install -g @google/gemini-cli${RESET}"
+    exit 1
+  fi
+  gemini -m "$model" -p "$prompt"
+}
+
+CMD="${1:-help}"
+shift || true
+
+case "$CMD" in
+  init)
+    banner
+    init_state
+    star_cta
+    ;;
+  specify|pm)
+    banner
+    init_state
+    run_gemini "gemini-2.5-pro" "@pm Read .gemini/workflows/specify.md and .gemini/agents/01-founder-pm.md. Scope this idea ruthlessly and write .startup/01_PRD.md and .startup/03_BACKLOG.md: $*"
+    star_cta
+    ;;
+  arch)
+    banner
+    run_gemini "gemini-2.5-pro" "@arch Read .startup/01_PRD.md and design the full system architecture in .startup/02_ARCHITECTURE.md. $*"
+    star_cta
+    ;;
+  boardroom)
+    banner
+    run_gemini "gemini-2.5-pro" "@boardroom Read .gemini/workflows/boardroom.md. Debate this dilemma (@pm vs @arch vs @finops) and log the ADR in .startup/05_DECISION_LOG.md: $*"
+    star_cta
+    ;;
+  implement|eng)
+    banner
+    TASK="${*:-next uncompleted task in .startup/03_BACKLOG.md}"
+    run_gemini "gemini-2.5-pro" "@eng Read .startup/02_ARCHITECTURE.md and .startup/03_BACKLOG.md. Implement ${TASK} with production code and automated tests."
+    star_cta
+    ;;
+  review)
+    banner
+    run_gemini "gemini-2.5-pro" "Read .gemini/workflows/review.md. Perform a multi-agent code review on the repository. $*"
+    ;;
+  refactor)
+    banner
+    run_gemini "gemini-2.5-pro" "@refactor Read .gemini/agents/11-refactor-surgeon.md. Safely refactor with characterization tests: $*"
+    ;;
+  debug)
+    banner
+    run_gemini "gemini-2.5-pro" "@debug Read .gemini/agents/12-bug-detective.md. Isolate root cause, write reproduction test, and fix: $*"
+    ;;
+  redteam)
+    banner
+    run_gemini "gemini-2.5-pro" "@redteam Audit the codebase against .startup/02_ARCHITECTURE.md and write .startup/04_SECURITY_AUDIT.md. $*"
+    star_cta
+    ;;
+  finops)
+    banner
+    run_gemini "gemini-2.5-flash" "@finops Audit SQL queries, caching, bundle weight, and LLM/cloud cost efficiency. $*"
+    ;;
+  scout)
+    banner
+    run_gemini "gemini-2.5-pro" "@scout Deep-research and synthesize using 2M context: $*"
+    ;;
+  ship)
+    banner
+    init_state
+    IDEA="$*"
+    echo -e "${YELLOW}▶ [Phase 1/4] @pm — Generating PRD & Atomic Backlog...${RESET}"
+    run_gemini "gemini-2.5-pro" "@pm Scope this MVP and write .startup/01_PRD.md and .startup/03_BACKLOG.md: ${IDEA}"
+    echo -e "${YELLOW}▶ [Phase 2/4] @arch — Designing System Architecture & Contracts...${RESET}"
+    run_gemini "gemini-2.5-pro" "@arch Read .startup/01_PRD.md and write the complete architecture in .startup/02_ARCHITECTURE.md."
+    echo -e "${YELLOW}▶ [Phase 3/4] @eng — Implementing Production Code & Tests...${RESET}"
+    run_gemini "gemini-2.5-pro" "@eng Implement all P0 tasks in .startup/03_BACKLOG.md following .startup/02_ARCHITECTURE.md."
+    echo -e "${YELLOW}▶ [Phase 4/4] @redteam — Running Adversarial Security & QA Gate...${RESET}"
+    run_gemini "gemini-2.5-pro" "@redteam Audit the implementation and write .startup/04_SECURITY_AUDIT.md."
+    echo -e "\n${GREEN}${BOLD}🚀 Autonomous Ship Pipeline Complete! Inspect .startup/ for all artifacts.${RESET}"
+    star_cta
+    ;;
+  star)
+    banner
+    if command -v gh &>/dev/null && gh auth status &>/dev/null; then
+      gh api -X PUT "/user/starred/${REPO_SLUG}" &>/dev/null && \
+        echo -e "${GREEN}${BOLD}⭐ Awesome! You just starred ${REPO_SLUG} on GitHub!${RESET}" || \
+        echo -e "👉 Star us in your browser: ${YELLOW}${REPO_URL}${RESET}"
+    else
+      echo -e "⭐ Give us a Star on GitHub: ${YELLOW}${BOLD}${REPO_URL}${RESET}"
+      if command -v open &>/dev/null; then open "${REPO_URL}"; elif command -v xdg-open &>/dev/null; then xdg-open "${REPO_URL}"; fi
+    fi
+    ;;
+  *)
+    banner
+    echo -e "${BOLD}Autonomous Terminal Commands:${RESET}"
+    echo "  ./bin/startup init                     Initialize .startup/ state bus"
+    echo "  ./bin/startup ship "<idea>"            Full 4-phase autonomous pipeline (Specify -> Arch -> Eng -> RedTeam)"
+    echo "  ./bin/startup specify "<idea>"         Generate PRD & atomic engineering backlog"
+    echo "  ./bin/startup arch                     Generate System Architecture & DB contracts"
+    echo "  ./bin/startup boardroom "<dilemma>"    Run 3-agent debate (@pm vs @arch vs @finops)"
+    echo "  ./bin/startup implement [TASK-ID]      Implement backlog tasks with tests"
+    echo "  ./bin/startup review                   Run multi-agent constitutional code review"
+    echo "  ./bin/startup refactor "<target>"      Safe refactoring with characterization tests"
+    echo "  ./bin/startup debug "<bug>"            Forensic root-cause isolation & reproduction test"
+    echo "  ./bin/startup redteam                  Run adversarial security & concurrency audit"
+    echo "  ./bin/startup finops                   Run SQL, latency & LLM/cloud cost optimization"
+    echo "  ./bin/startup star                     ⭐ Star this repository on GitHub!"
+    echo ""
+    echo -e "${BOLD}Interactive Gemini CLI Slash Commands (inside 'gemini'):${RESET}"
+    echo "  /startup:specify  /startup:implement  /startup:boardroom  /startup:review"
+    echo "  /startup:refactor /startup:debug      /startup:redteam    /startup:finops"
+    echo "  /startup:scout    /startup:design     /startup:devops     /startup:ship"
+    star_cta
+    ;;
+esac

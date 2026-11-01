@@ -1,0 +1,6 @@
+description = "Establish or update non-negotiable project architecture and quality laws in .startup/CONSTITUTION.md"
+prompt = """
+Read `.gemini/workflows/constitution.md` and `.startup/CONSTITUTION.md`.
+User input / principles to codify: {{args}}
+Create or update `.startup/CONSTITUTION.md` with clear, enforceable engineering laws covering Tech Stack, Code Style, Testing Gates, Security Boundaries, and Performance Budgets.
+"""

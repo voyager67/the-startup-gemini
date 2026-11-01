@@ -1,0 +1,41 @@
+name: Validate Gemini CLI Agents & Slash Commands
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check Shell Scripts Syntax
+        run: |
+          bash -n install.sh
+          bash -n bin/startup
+
+      - name: Verify Core Framework Files
+        run: |
+          test -f GEMINI.md
+          test -f gemini-extension.json
+          test -f .gemini/settings.json
+          test -f .startup/CONSTITUTION.md
+
+      - name: Validate All 20 TOML Slash Commands
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+        run: |
+          python3 -c '
+          import glob, tomllib
+          files = sorted(glob.glob(".gemini/commands/startup/*.toml"))
+          assert len(files) >= 20, f"Expected >= 20 slash commands, found {len(files)}"
+          for f in files:
+              with open(f, "rb") as fp:
+                  data = tomllib.load(fp)
+                  assert "description" in data and "prompt" in data, f"Missing keys in {f}"
+          print(f"Validated {len(files)} native Gemini CLI TOML slash commands successfully!")
+          '

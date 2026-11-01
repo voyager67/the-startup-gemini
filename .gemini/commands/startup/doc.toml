@@ -1,0 +1,6 @@
+description = "Generate or synchronize architecture docs, API references, and onboarding guides"
+prompt = """
+Read `.gemini/agents/09-growth-devrel.md` and `.startup/02_ARCHITECTURE.md`.
+Documentation target: {{args}}
+Update documentation with accurate ASCII diagrams, copy-pasteable quickstarts, exact configuration tables, and zero stale examples.
+"""

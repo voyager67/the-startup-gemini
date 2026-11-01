@@ -1,0 +1,6 @@
+description = "Generate comprehensive unit, integration, boundary, and adversarial tests"
+prompt = """
+Read `.gemini/agents/05-red-team-qa.md` and `.startup/CONSTITUTION.md`.
+Target module or feature: {{args}}
+Write deterministic tests covering happy paths, boundary values, malformed inputs, error recovery, and concurrency edge cases. Execute the test suite and report coverage.
+"""

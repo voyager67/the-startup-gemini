@@ -1,0 +1,6 @@
+description = "Resolve ambiguities in active specifications with targeted, high-leverage questions"
+prompt = """
+Read `.gemini/workflows/clarify.md` and inspect the active specification files in `.startup/`.
+Focus area: {{args}}
+Identify up to 5 critical underspecified edge cases, architectural trade-offs, or UX ambiguities. Present each with a recommended default and concrete options.
+"""
